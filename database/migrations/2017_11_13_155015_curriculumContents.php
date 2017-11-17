@@ -19,7 +19,7 @@ class CurriculumContents extends Migration
             $table->string('contents');
             $table->string('image');
             $table->timestamps();
-            $table->foreign('curriculum_id')->references('id')->on('curriculum');
+            $table->foreign('curriculum_id')->references('id')->on('curriculums');
         });
     }
 

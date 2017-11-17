@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CompanyAccount extends Migration
+class CompanyAccounts extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CompanyAccount extends Migration
      */
     public function up()
     {
-        Schema::create('companyAccount', function (Blueprint $table) {
+        Schema::create('companyAccounts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('email');
@@ -29,6 +29,6 @@ class CompanyAccount extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companyAccount');
+        Schema::dropIfExists('companyAccounts');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class SchoolCurriculum extends Migration
+class Schools extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class SchoolCurriculum extends Migration
      */
     public function up()
     {
-        Schema::create('schoolCurriculum', function (Blueprint $table) {
+        Schema::create('schools', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('teacher_id')->unsigned();
-            $table->integer('curriculum_id')->unsigned();
-            $table->integer('time_table_id')->unsigned();
-            $table->string('comment');
-            $table->integer('ecaluation');
+            $table->string('name');
+            $table->string('address');
+            $table->string('password');
+            $table->string('telephone_number',11);
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class SchoolCurriculum extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schoolCurriculum');
+        Schema::dropIfExists('schools');
     }
 }
