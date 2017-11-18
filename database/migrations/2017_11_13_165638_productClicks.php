@@ -13,15 +13,15 @@ class ProductClicks extends Migration
      */
     public function up()
     {
-        Schema::create('productClicks', function (Blueprint $table) {
+        Schema::create('product_clicks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('teacher_id')->unsigned();
             $table->integer('curriculum_id')->unsigned();
             $table->integer('product_id')->unsigned();
             $table->timestamps();
-            $table->foreign('teacher_id')->references('id')->on('companyAccounts');
-            $table->foreign('curriculum_id')->references('id')->on('companyAccounts');
-            $table->foreign('product_id')->references('id')->on('companyAccounts');
+            $table->foreign('teacher_id')->references('id')->on('company_accounts');
+            $table->foreign('curriculum_id')->references('id')->on('company_accounts');
+            $table->foreign('product_id')->references('id')->on('company_accounts');
         });
     }
 
@@ -32,6 +32,6 @@ class ProductClicks extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('productClicks');
+        Schema::dropIfExists('product_clicks');
     }
 }

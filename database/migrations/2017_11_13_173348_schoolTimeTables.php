@@ -13,7 +13,7 @@ class SchoolTimeTables extends Migration
      */
     public function up()
     {
-        Schema::create('schoolTimeTables', function (Blueprint $table) {
+        Schema::create('school_time_tables', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('school_id')->unsigned();
             $table->date('start');
@@ -30,6 +30,6 @@ class SchoolTimeTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schoolTimeTables');
+        Schema::dropIfExists('school_time_tables');
     }
 }

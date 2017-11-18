@@ -13,7 +13,7 @@ class ProgrammerAccounts extends Migration
      */
     public function up()
     {
-        Schema::create('programmerAccounts', function (Blueprint $table) {
+        Schema::create('programmer_accounts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('password');
@@ -29,6 +29,6 @@ class ProgrammerAccounts extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('programmerAccounts');
+        Schema::dropIfExists('programmer_accounts');
     }
 }

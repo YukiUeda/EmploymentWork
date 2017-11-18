@@ -22,7 +22,7 @@ class Products extends Migration
             $table->string('image');
             $table->integer('click_price');
             $table->timestamps();
-            $table->foreign('company_id')->references('id')->on('companyAccounts');
+            $table->foreign('company_id')->references('id')->on('company_accounts');
         });
     }
 

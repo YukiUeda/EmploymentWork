@@ -22,7 +22,7 @@ class Curriculums extends Migration
             $table->string('curriculum_image');
             $table->integer('subject');
             $table->timestamps();
-            $table->foreign('programmer_id')->references('id')->on('programmerAccounts');
+            $table->foreign('programmer_id')->references('id')->on('programmer_accounts');
             $table->foreign('product_id')->references('id')->on('products');
         });
     }

@@ -13,7 +13,7 @@ class CurriculumContents extends Migration
      */
     public function up()
     {
-        Schema::create('curriculumContents', function (Blueprint $table) {
+        Schema::create('curriculum_contents', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('curriculum_id')->unsigned();
             $table->string('contents');
@@ -30,6 +30,6 @@ class CurriculumContents extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('CurriculumContents');
+        Schema::dropIfExists('Curriculum_contents');
     }
 }

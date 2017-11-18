@@ -13,7 +13,7 @@ class TeacherAccounts extends Migration
      */
     public function up()
     {
-        Schema::create('teacherAccounts', function (Blueprint $table) {
+        Schema::create('teacher_accounts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('school_id')->unsigned();
             $table->string('name');
@@ -31,6 +31,6 @@ class TeacherAccounts extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('teacherAccounts');
+        Schema::dropIfExists('teacher_accounts');
     }
 }

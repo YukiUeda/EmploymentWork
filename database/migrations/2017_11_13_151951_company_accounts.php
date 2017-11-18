@@ -13,7 +13,7 @@ class CompanyAccounts extends Migration
      */
     public function up()
     {
-        Schema::create('companyAccounts', function (Blueprint $table) {
+        Schema::create('company_accounts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('email');
@@ -29,6 +29,6 @@ class CompanyAccounts extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companyAccounts');
+        Schema::dropIfExists('company_accounts');
     }
 }
