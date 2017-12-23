@@ -17,6 +17,9 @@ class Curriculums extends Migration
             $table->increments('id');
             $table->integer('programmer_id')->unsigned();
             $table->integer('product_id')->unsigned();
+            $table->integer('time')->unsigned();
+            $table->integer('school_grade')->unsigned();
+            $table->integer('semester')->unsigned();
             $table->string('title');
             $table->string('description');
             $table->string('curriculum_image');

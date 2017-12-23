@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Products extends Migration
+class ProgrammerAccounts extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class Products extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('programmer_accounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('company_id')->unsigned();
             $table->string('name');
-            $table->string('url');
-            $table->integer('price');
-            $table->string('image');
-            $table->integer('click_price');
+            $table->string('password');
+            $table->string('email');
+            $table->rememberToken();
             $table->timestamps();
-            $table->foreign('company_id')->references('id')->on('company_accounts');
         });
     }
 
@@ -33,6 +30,6 @@ class Products extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('programmer_accounts');
     }
 }

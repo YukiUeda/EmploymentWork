@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class SchoolTimeTables extends Migration
+class Schools extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,16 @@ class SchoolTimeTables extends Migration
      */
     public function up()
     {
-        Schema::create('school_time_tables', function (Blueprint $table) {
+        Schema::create('schools', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('school_id')->unsigned();
-            $table->date('start');
-            $table->date('end');
+            $table->string('name');
+            $table->string('address');
+            $table->string('email');
+            $table->string('password');
+            $table->string('telephone_number',11);
+            $table->integer('semester');
+            $table->rememberToken();
             $table->timestamps();
-            $table->foreign('school_id')->references('id')->on('schools');
         });
     }
 
@@ -30,6 +33,6 @@ class SchoolTimeTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('school_time_tables');
+        Schema::dropIfExists('schools');
     }
 }
