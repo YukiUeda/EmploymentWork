@@ -18,6 +18,23 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
+            switch($guard){
+                case 'school':
+                    return redirect()->guest('school/top');
+                    break;
+                case 'teacher_account':
+                    return redirect()->guest('teacher/top');
+                    break;
+                case 'company_account':
+                    return redirect()->guest('company/top');
+                    break;
+                case 'programmer_account':
+                    return redirect()->guest('programmer/top');
+                    break;
+                default:
+                    return redirect('/');
+                    break;
+            }
             return redirect('/home');
         }
 

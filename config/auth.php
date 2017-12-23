@@ -40,10 +40,25 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
+        ],
+        'school' => [
+            'driver' => 'session',
+            'provider' => 'schools',
+        ],
+        'teacher_account' => [
+            'driver' => 'session',
+            'provider' => 'teacher_accounts',
+        ],
+        'company_account' => [
+            'driver' => 'session',
+            'provider' => 'company_accounts',
+        ],
+        'programmer_account' => [
+            'driver' => 'session',
+            'provider' => 'programmer_accounts',
         ],
     ],
 
@@ -69,11 +84,26 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'schools' => [
+            'driver' => 'eloquent',
+            'model' => App\School::class,
+        ],
+        'teacher_accounts' => [
+            'driver' => 'eloquent',
+            'model' => App\TeacherAccount::class,
+        ],
+        'teacher_accounts' => [
+            'driver' => 'eloquent',
+            'model' => App\TeacherAccount::class,
+        ],
+        'company_accounts' => [
+            'driver' => 'eloquent',
+            'model' => App\CompanyAccount::class,
+        ],
+        'programmer_accounts' => [
+            'driver' => 'eloquent',
+            'model' => App\ProgrammerAccount::class,
+        ],
     ],
 
     /*
@@ -94,6 +124,26 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'schools' => [
+            'provider' => 'schools',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'teacher_accounts' => [
+            'provider' => 'teacher_accounts',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'teacher_accounts' => [
+            'provider' => 'teacher_accounts',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'company_accounts' => [
+            'provider' => 'company_accounts',
             'table' => 'password_resets',
             'expire' => 60,
         ],
