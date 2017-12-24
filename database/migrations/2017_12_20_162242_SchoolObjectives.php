@@ -20,6 +20,7 @@ class SchoolObjectives extends Migration
             $table->integer('school_grade')->unsigned();
             $table->integer('year')->unsigned();
             $table->integer('semester')->unsigned();
+            $table->integer('subject')->unsigned();
             $table->timestamps();
             $table->foreign('school_id')->references('id')->on('schools');
             $table->foreign('objective_id')->references('id')->on('objectives');
