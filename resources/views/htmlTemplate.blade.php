@@ -2,10 +2,19 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <title>teacher</title>
+    <!--js-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{{'/js/materialize.min.js'}}}"></script>
+    <script type="text/javascript" src="{{{'/js/clockpicker.js'}}}"></script>
+    @yield('js')
+
+    <!--css-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{{{'/css/materialize.min.css'}}}"  media="screen,projection"/>
+    @yield('css')
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@yield('title')</title>
 </head>
 <body>
     @yield('main')

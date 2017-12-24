@@ -135,8 +135,8 @@ class ClassController extends Controller
                 $i = 0;
                 foreach ($input_classes as $input_class){
                     $class[$i] = array(
-                            'class_name' => $input_class,
-                            'teacher_id' => $input_teacher[$i]
+                        'class_name' => $input_class,
+                        'teacher_id' => $input_teacher[$i]
                     );
                     $i++;
                 }

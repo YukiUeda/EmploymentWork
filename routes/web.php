@@ -71,6 +71,17 @@ Route::group(['prefix' => '/school', 'middleware' => 'auth:school'], function() 
     //クラスの設定
     Route::get('class/setting','school\ClassController@getSetting');
     Route::post('class/check', 'school\ClassController@postSetting');
+    //目標設定 学年 科目選択
+    Route::get('objective/choice','school\ObjectiveController@index');
+    Route::post('objective/choice','school\ObjectiveController@index');
+    Route::post('objective/setting','school\ObjectiveController@choice');
+    //autocompleat,ajax用
+    Route::post('objective/ajax','school\ObjectiveController@ajax');
+    //目標設定
+    Route::get('objective/setting','school\ObjectiveController@getSetting');
+    Route::get('objective/check','school\ObjectiveController@postetting');
+    Route::post('objective/check','school\ObjectiveController@postetting');
+
 });
 
 
