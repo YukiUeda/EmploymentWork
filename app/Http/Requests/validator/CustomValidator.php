@@ -17,10 +17,15 @@ class CustomValidator extends Validator
     public function validateRequestExist($attribute, $value, $parameters,$validator){
         //リクエストの全値取得
         $data   = $validator->getData();
-        $values = $data[strstr($attribute, '.', true)];
-        $index  = substr(strstr($attribute,'.'),1);
+        $key    = explode('.',$attribute);
+        $values = $data[$key[0]];
+        //多重配列にも対応
+        for($i=1;$i<count($key)-1;$i++){
+            $values = $values[$key[$i]];
+        }
+        //重複チェック
         for($i=0; $i< count($values) ; $i++) {
-            if( $index != $i) {
+            if($key[count($key)-1] != $i) {
                 if($value == $values[$i]){
                     return false;
                 }
