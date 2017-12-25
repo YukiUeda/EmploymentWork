@@ -27,7 +27,7 @@
     <div class="row">
         <div class="input-field col s12">
             {!! Form::label('objective', '目標')!!}
-            {!! Form::text('',null,['id'=>'autocomplete-input','class'=>'autocomplete']) !!}
+            {!! Form::text('',null,['id'=>'autocomplete-input','class'=>'autocomplete','autocomplete'=>'off']) !!}
         </div>
         <div class="input-field col s12 center">
             @for($i=1;$i <= Auth::user()->semester;$i++)

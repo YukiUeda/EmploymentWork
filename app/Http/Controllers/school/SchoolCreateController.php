@@ -47,7 +47,7 @@ class SchoolCreateController extends Controller
     public function createCode(){
         //ログインしているユーザ情報取得
         $school = \Auth::user();
-
+        $name   = $school->name;
         //アカウント作成コードの存在チェック
         $judge = true;
         $strCode = str_random(4);
@@ -70,6 +70,6 @@ class SchoolCreateController extends Controller
         $teacherCode->school_id = $school->id;
         $teacherCode->save();
 
-        return view('school.code',compact("strCode"));
+        return view('school.code',compact("strCode",'name'));
     }
 }

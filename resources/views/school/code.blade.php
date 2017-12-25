@@ -1,5 +1,5 @@
-@extends('htmlTemplate')
+@extends('school.layout')
 
-@section('main')
+@section('content')
     <p>{{$strCode}}</p>
 @endsection
