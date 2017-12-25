@@ -153,11 +153,9 @@ class ObjectiveController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax(Request $request){
-        //入力された値
-        $search = $request->objective;
-        //曖昧検索
-        $objectives = Objective::where('name','like','%'.$search.'%')->get();
+    public function ajax(){
+        //一覧取得
+        $objectives = Objective::all();
         $objective = array();
         //autoComplete向けにデータ整形
         foreach ($objectives as $value){

@@ -52,34 +52,28 @@ $(function() {
   /**
    * 目標のautocompleteを取得するメソッド
    **/
-  $('#autocomplete-input').on('keyup', function() {
-    if ($('#autocomplete-input').val().length == 1) {
-      $.ajax({
-          headers: {
-            'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
+  $(function() {
+    $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
+        },
+        url: '/school/objective/ajax',
+        type: 'POST',
+      })
+      .done(function(data) {
+        $('input.autocomplete').autocomplete({
+          data: data,
+          limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+          onAutocomplete: function(val) {
+            // Callback function when value is autcompleted.
           },
-          url: '/school/objective/ajax',
-          type: 'POST',
-          data: {
-            'objective': $('#autocomplete-input').val(),
-          }
-        })
-        .done(function(data) {
-          console.log(data);
-          $('input.autocomplete').autocomplete({
-            data: data,
-            limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-            onAutocomplete: function(val) {
-              // Callback function when value is autcompleted.
-            },
-            minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-          });
-        })
-        .fail(function(data) {
-          $('.result').html(data);
+          minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
         });
-    }
-  });
+      })
+      .fail(function(data) {
+        $('.result').html(data);
+      });
+    });
 });
 (function($) {
   $('.textpicker').pickatime({
