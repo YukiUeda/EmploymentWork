@@ -16,7 +16,7 @@ class CurriculumContents extends Migration
         Schema::create('curriculum_contents', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('curriculum_id')->unsigned();
-            $table->string('contents');
+            $table->text('contents');
             $table->string('image');
             $table->timestamps();
             $table->foreign('curriculum_id')->references('id')->on('curriculums');

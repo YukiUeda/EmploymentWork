@@ -20,6 +20,7 @@ class TeacherClasses extends Migration
             $table->integer('school_grade')->unsigned();
             $table->string('class_name');
             $table->integer('year')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('school_id')->references('id')->on('schools');
             $table->foreign('teacher_id')->references('id')->on('teacher_accounts');

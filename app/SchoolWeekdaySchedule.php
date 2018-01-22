@@ -4,8 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Curriculum extends Model
+class SchoolWeekdaySchedule extends Model
 {
-    public $table = "curriculums";
     //
 }

@@ -19,9 +19,9 @@ class ProductClicks extends Migration
             $table->integer('curriculum_id')->unsigned();
             $table->integer('product_id')->unsigned();
             $table->timestamps();
-            $table->foreign('teacher_id')->references('id')->on('company_accounts');
-            $table->foreign('curriculum_id')->references('id')->on('company_accounts');
-            $table->foreign('product_id')->references('id')->on('company_accounts');
+            $table->foreign('teacher_id')->references('id')->on('teacher_accounts');
+            $table->foreign('curriculum_id')->references('id')->on('curriculums');
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 

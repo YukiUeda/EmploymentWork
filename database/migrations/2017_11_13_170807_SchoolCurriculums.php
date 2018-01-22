@@ -18,8 +18,10 @@ class SchoolCurriculums extends Migration
             $table->integer('teacher_id')->unsigned();
             $table->integer('curriculum_id')->unsigned();
             $table->integer('time_table_id')->unsigned();
-            $table->string('comment');
-            $table->integer('ecaluation');
+            $table->integer('year')->unsigned();
+            $table->date('date');
+            $table->string('comment')->nullable();
+            $table->integer('ecaluation')->nullable();
             $table->timestamps();
         });
     }
