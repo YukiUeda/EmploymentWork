@@ -12,7 +12,7 @@
             </ul>
         </div>
     @endif
-    {!! Form::open(['url' => '/top']) !!}
+    {!! Form::open(['url' => '/teacher/login']) !!}
     <div class="mdl-textfield mdl-js-textfield">
         {!! Form::label('email', 'メールアドレス',['class'=>'mdl-textfield__label']) !!}
         {!! Form::text('email', null,['class'=>'mdl-textfield__input']) !!}

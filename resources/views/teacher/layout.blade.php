@@ -1,49 +1,54 @@
 @extends('htmlTemplate')
+@section('css')
+    <link  type="text/css" rel="stylesheet" href="{{{'/css/teacherHeader.css'}}}">
+    <link  type="text/css" rel="stylesheet" href="{{{'/css/fullcalendar.min.css'}}}">
+@endsection
+@section('js')
+    <script type="text/javascript" src="{{{'/js/moment.min.js'}}}"></script>
+    <script type="text/javascript" src="{{{'/js/fullcalendar.min.js'}}}"></script>
+    <script>
+        $(function(){
+            $(".button-collapse").sideNav();
+        });
+        $(document).ready(function(){
+            $('ul.tabs').tabs();
+        });
+
+    </script>
+@endsection
 @section('main')
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
-    <header class="mdl-layout__header">
-        <!-- Top row, always visible -->
-        <div class="mdl-layout__header-row">
-            <!-- Title -->
-            <span class="mdl-layout-title">教職員ページ</span>
-            <div class="mdl-layout-spacer"></div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                  mdl-textfield--floating-label mdl-textfield--align-right">
-                <label class="mdl-button mdl-js-button mdl-button--icon"
-                       for="waterfall-exp">
-                    <i class="material-icons">search</i>
-                </label>
-                <div class="mdl-textfield__expandable-holder">
-                    <input class="mdl-textfield__input" type="text" name="sample"
-                           id="waterfall-exp">
-                </div>
+
+    <div class="navbar-fixed">
+        <nav class="nav-extended">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">Logo</a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="collapsible.html"><i class="material-icons">account_circle</i></a></li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a href="sass.html">Sass</a></li>
+                    <li><a href="badges.html">Components</a></li>
+                    <li><a href="collapsible.html">JavaScript</a></li>
+                </ul>
             </div>
-        </div>
-        <!-- Bottom row, not visible on scroll -->
-        <div class="mdl-layout__header-row">
-            <div class="mdl-layout-spacer"></div>
-            <!-- Navigation -->
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
-            </nav>
-        </div>
-    </header>
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">〇〇さん</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
+            <div class="nav-content">
+                <ul class="tabs tabs-transparent col s12">
+                    @foreach(Config::get('const.curriculum') as $key=>$curriculum )
+                        <li class="tab col s1"><a href="#curriculum{{$key}}">{{$curriculum}}</a></li>
+                    @endforeach
+                </ul>
+            </div>
         </nav>
     </div>
-    <main class="mdl-layout__content">
-        <div class="page-content">
-            @yield('content')
-        </div>
+    <main>
+        @yield('content')
     </main>
-</div>
+
+    <aside>
+        <ul class="side-nav fixed">
+            <li><a href="/teacher/top"><i class="material-icons">home</i>TOP</a></li>
+            <li><a href="/teacher/curriculum"><i class="material-icons">book</i>カリキュラム</a></li>
+        </ul>
+    </aside>
 @endsection
