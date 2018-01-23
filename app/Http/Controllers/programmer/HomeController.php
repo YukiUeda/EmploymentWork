@@ -88,6 +88,7 @@ class HomeController extends Controller
                 break;
             case 'day':
                 //１日単位の日にちの取得
+                $type = '日';
                 $productClicks= ProductClick::query()
                     ->select(\DB::raw('sum(click_price) as price, DATE_FORMAT(product_clicks.created_at, \'%Y%-%m%-%d\') as date'))
                     ->join('curriculums','curriculum_id','=','curriculums.id')
