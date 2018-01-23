@@ -39,7 +39,6 @@
             <div class="col s12">
                 <label>{{$i}}学期の目標</label>
                 <div class="col s12" id="input_objective{{$i}}">
-                    {{Debugbar::addMessage($objective)}}
                     @if(isset($objective[$i]))
                         @for($j=0;$j < count($objective[$i]);$j++)
                             <div class="chip">
