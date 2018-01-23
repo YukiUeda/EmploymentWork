@@ -13,3 +13,4 @@ yarn-error.log
 package.json
 composer.json
 composer.lock
+resources/views/.idea
