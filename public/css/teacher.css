@@ -1,0 +1,51 @@
+@media all and (max-width: 993px){
+    main, #test1 {
+      padding-left: 0px;
+    }
+}
+
+@media all and (min-width: 993px){
+    main, #test1 {
+      padding-left: 300px;
+    }
+}
+
+#calendar{
+  top: 64px;
+}
+
+.border{
+  border-bottom: 1px solid #9e9e9e;
+  position:relative;
+  margin-bottom: 1.424rem;
+}
+
+.border p{
+  position:absolute;
+  left: 0;
+  bottom:0;
+}
+
+.border h2{
+  margin-bottom: 0;
+}
+
+
+#main{
+  padding: 0rem 10rem 0rem 10rem;
+  margin-bottom: 3rem;
+}
+
+h3{
+  font-size: 1.5rem;
+}
+
+#product img,#product .card-panel,#product a,
+#content img,#content .card-panel{
+  padding-left: 0px;
+}
+
+.bold{
+  font-weight: 500;
+  font-size: 1.5rem;
+}
