@@ -36,7 +36,7 @@ class ObjectiveController extends Controller
         $semester = $school->semester;
 
         //入力されたデータ取得
-        $year      = date('Y')+$request->year;
+        $year      = date('Y',strtotime('-3 month',time()))+$request->year;
         $grade   = $request->grade;
         $subject = $request->subject;
 
@@ -68,7 +68,7 @@ class ObjectiveController extends Controller
         $objective = $request->objective;
         $grade     = $request->grade;
         $subject     = $request->subject;
-        $year      = date('Y')+$request->year;
+        $year      = date('Y',strtotime('-3 month',time()))+$request->year;
 
         for ($i=1;$i<=$semester;$i++){
             //学期、年、科目、ログインユーザで取得データの絞り込み
@@ -83,27 +83,46 @@ class ObjectiveController extends Controller
                     if($object){
                         //存在していたらデータ取得
                         $object = Objective::query()->where('name','=',$objective[$i][$j])->get();
+
+
+                        //学校目標テーブルにすでに登録されているかのチェック
+                        if(isset($SchoolObjective[$j])){
+                            //登録されているとデータ更新
+                            $SchoolObjective[$j]->objective_id = $object[0]->id;
+                            $SchoolObjective[$j]->update();
+                        }else{
+                            //登録されていない場合新規登録
+                            $school_objective = new SchoolObjective;
+                            $school_objective->school_id    = $id;
+                            $school_objective->objective_id = $object[0]->id;
+                            $school_objective->school_grade = $grade;
+                            $school_objective->year         = $year;
+                            $school_objective->semester     = $i;
+                            $school_objective->subject      = $subject;
+                            $school_objective->save();
+                        }
                     }else{
                         //存在していなかったら登録
                         $object = new Objective;
                         $object->name = $objective[$i][$j];
                         $object->save();
-                    }
-                    //学校目標テーブルにすでに登録されているかのチェック
-                    if(isset($SchoolObjective[$j])){
-                        //登録されているとデータ更新
-                        $SchoolObjective[$j]->objective_id = $object[0]->id;
-                        $SchoolObjective[$j]->update();
-                    }else{
-                        //登録されていない場合新規登録
-                        $school_objective = new SchoolObjective;
-                        $school_objective->school_id    = $id;
-                        $school_objective->objective_id = $object[0]->id;
-                        $school_objective->school_grade = $grade;
-                        $school_objective->year         = $year;
-                        $school_objective->semester     = $i;
-                        $school_objective->subject      = $subject;
-                        $school_objective->save();
+
+                        //学校目標テーブルにすでに登録されているかのチェック
+                        if(isset($SchoolObjective[$j])){
+                            //登録されているとデータ更新
+                            $SchoolObjective[$j]->objective_id = $object->id;
+                            $SchoolObjective[$j]->update();
+                        }else{
+                            //登録されていない場合新規登録
+                            $school_objective = new SchoolObjective;
+                            $school_objective->school_id    = $id;
+                            $school_objective->objective_id = $object->id;
+                            $school_objective->school_grade = $grade;
+                            $school_objective->year         = $year;
+                            $school_objective->semester     = $i;
+                            $school_objective->subject      = $subject;
+                            $school_objective->save();
+                        }
                     }
                 }
             }else{
@@ -150,7 +169,6 @@ class ObjectiveController extends Controller
 
     /**
      * autoCompleteの曖昧検索
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function ajax(){
