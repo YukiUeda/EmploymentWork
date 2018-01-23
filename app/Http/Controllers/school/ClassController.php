@@ -37,7 +37,7 @@ class ClassController extends Controller
 
         //入力された翌年か当年かの値
         $request_year = $request->year;
-        $year = date('Y')+$request_year;
+        $year = date('Y',strtotime('-3 month',time()))+$request_year;
 
         //入力された学年データ
         $grade = $request->grade;
@@ -68,7 +68,7 @@ class ClassController extends Controller
 
         //入力された翌年か当年かの値
         $request_year = $request->year;
-        $year = date('Y')+$request_year;
+        $year = date('Y',strtotime('-3 month',time()))+$request_year;
 
         //入力された値取得
         $grade = $request->grade;
