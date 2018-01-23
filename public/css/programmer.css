@@ -1,0 +1,54 @@
+textarea {
+  resize: none;
+}
+
+div {}
+
+textarea {
+  height: 200px;
+}
+
+.text_area {
+  display: inline-block;
+  width: 100%;
+}
+
+.button_group {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.button_group button {
+  background-image: -webkit-linear-gradient(#fff, #e6e6e6);
+  background-image: -o-linear-gradient(#fff, #e6e6e6);
+  background-image: linear-gradient(#fff, #e6e6e6);
+  border-color: rgba(0, 0, 0, .1) rgba(0, 0, 0, .1) rgba(0, 0, 0, .25);
+  height: 2.1em;
+  padding: 0 .6em;
+  margin: 0 0 0 -5px;
+}
+
+.left-button {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.right-button {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#active_button{
+  background-color: #ccc;
+background-image: none;
+box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+}
+
+.main {
+  position: relative;
+}
+
+.main h2 {
+  margin-top: 0;
+}
