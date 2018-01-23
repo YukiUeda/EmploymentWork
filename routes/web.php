@@ -20,8 +20,10 @@ Auth::routes();
 */
 
 Route::group(['prefix' => 'teacher'], function() {
+    //先生ログイン画面
     Route::get ('login',    'teacher\LoginController@showLoginForm')->name('teacher.login');
     Route::post('login',    'teacher\LoginController@login');
+    //先生アカウント作成画面
     Route::get ('create',   'teacher\TeacherCreateController@index');
     Route::post('create',   'teacher\TeacherCreateController@create');
 });
@@ -32,7 +34,24 @@ Route::group(['prefix' => 'teacher'], function() {
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'teacher', 'middleware' => 'auth:teacher_account'], function() {
+    //ログアウト
+    Route::get('logout',   'teacher\LoginController@logout')->name('teacher.logout');
+    Route::post('logout',   'teacher\LoginController@logout')->name('teacher.logout');
+    //TOPページ
     Route::get ('top',    'teacher\HomeController@index');
+    //TOPページのカレンダー情報の取得
+    Route::get('/calender','teacher\HomeController@calender');
+    Route::post('/calender','teacher\HomeController@calender');
+    //カリキュラム一覧
+    Route::get ('curriculum','teacher\CurriculumController@index');
+    //カリキュラム詳細画面
+    Route::get('/curriculum/{id}','teacher\CurriculumController@detail');
+    //カリキュラム追加画面
+    Route::get('/curriculum/{id}/add','teacher\CurriculumController@getAdd');
+    //カリキュラム追加処理
+    Route::post('/curriculum/{id}/add','teacher\CurriculumController@postAdd');
+    //商品のページ表示
+    Route::get('/click/{id}','teacher\CurriculumController@productClick');
 });
 
 /*
@@ -41,9 +60,13 @@ Route::group(['prefix' => 'teacher', 'middleware' => 'auth:teacher_account'], fu
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'school'], function() {
+    //loginにリダイレクト
     Route::get('/',         function () { return redirect('/school/login'); });
+    //ログイン画面
     Route::get('login',     'school\LoginController@showLoginForm')->name('school.login');
+    //ログイン処理
     Route::post('login',    'school\LoginController@login');
+    //学校アカウント作成
     Route::get('create', 'school\SchoolCreateController@index');
     Route::post('create', 'school\SchoolCreateController@create');
 });
@@ -81,7 +104,14 @@ Route::group(['prefix' => '/school', 'middleware' => 'auth:school'], function() 
     Route::get('objective/setting','school\ObjectiveController@getSetting');
     Route::get('objective/check','school\ObjectiveController@postetting');
     Route::post('objective/check','school\ObjectiveController@postetting');
-
+    //クラスの時間割設定
+    Route::get('class/weekday','school\WeekdayScheduleController@index');
+    Route::get('class/weekday/setting','school\WeekdayScheduleController@getSetting');
+    Route::post('class/weekday/setting','school\WeekdayScheduleController@postSetting');
+    //時間割設定
+    Route::get('class/weekday/setting/ajax','school\WeekdayScheduleController@weekdaySetting');
+    Route::post('class/weekday/setting/ajax','school\WeekdayScheduleController@weekdaySetting');
+    Route::post('class/weekday/save','school\WeekdayScheduleController@postSave');
 });
 
 
@@ -91,8 +121,10 @@ Route::group(['prefix' => '/school', 'middleware' => 'auth:school'], function() 
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'company'], function() {
+    //会社アカウント作成
     Route::get('create', 'company\CreateController@index');
     Route::post('create', 'company\CreateController@create');
+    //ログイン画面
     Route::get('login',     'company\LoginController@showLoginForm')->name('company.login');
     Route::post('login',    'company\LoginController@login');
 });
@@ -103,9 +135,15 @@ Route::group(['prefix' => 'company'], function() {
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'company', 'middleware' => 'auth:company_account'], function() {
+    //TOP画面
     Route::get('top', 'company\HomeController@index');
-    Route::get('productCreate','company\ProductController@index');
-    Route::post('productCreate','company\ProductController@productCreate');
+    //商品追加
+    Route::get('product/create','company\ProductController@index');
+    Route::post('product/create','company\ProductController@productCreate');
+    //プラグイン商品追加
+    Route::get('product/plugin/create','company\ProductController@pluginIndex');
+    Route::post('product/plugin/create','company\ProductController@productPluginCreate');
+    //ログアウト
     Route::get('logout',   'company\LoginController@logout')->name('company.logout');
     Route::post('logout',   'company\LoginController@logout')->name('company.logout');
 });
@@ -117,9 +155,11 @@ Route::group(['prefix' => 'company', 'middleware' => 'auth:company_account'], fu
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'programmer'], function() {
-    Route::get('create','programmer\ProgrammerCreateController@index');
-    Route::post('create', 'programmer\ProgrammerCreateController@create');
-    Route::get('login',     'programmer\LoginController@showLoginForm')->name('programmer.login');
+    //プログラマーアカウント作成
+    Route::get( 'create',   'programmer\ProgrammerCreateController@index');
+    Route::post('create',   'programmer\ProgrammerCreateController@create');
+    //ログイン
+    Route::get( 'login',    'programmer\LoginController@showLoginForm')->name('programmer.login');
     Route::post('login',    'programmer\LoginController@login');
 });
 
@@ -129,10 +169,22 @@ Route::group(['prefix' => 'programmer'], function() {
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'programmer', 'middleware' => 'auth:programmer_account'], function() {
-    Route::get('top','programmer\HomeController@index');
-    Route::get('product','programmer\ProductController@curriculum');
-    Route::post('product/ajax','programmer\ProductController@list');
-    Route::get('product/ajax','programmer\ProductController@list');
-    Route::get('logout',   'programmer\LoginController@logout')->name('programmer.logout');
-    Route::post('logout',   'programmer\LoginController@logout')->name('programmer.logout');
+    //TOP画面
+    Route::get( 'top',         'programmer\HomeController@index');
+    //商品一覧ページ
+    Route::get( 'product',     'programmer\ProductController@curriculum');
+    Route::post('product',     'programmer\ProductController@curriculum');
+    //カリキュラム設定ページ
+    Route::get( 'product/{id}','programmer\ProductController@curriculumSetting');
+    Route::post('product/{id}','programmer\ProductController@curriculumSetting');
+    //カリキュラム設定
+    Route::post('product/{id}/create','programmer\ProductController@curriculumCreate');
+    //目標のオートコンプリート
+    Route::post('autoComplete','programmer\ProductController@autoComplete');
+    Route::get( 'autoComplete','programmer\ProductController@autoComplete');
+    //TOPのチャートようajax
+    Route::post('chart/ajax',         'programmer\HomeController@ajax');
+    //ログアウトページ
+    Route::get( 'logout',      'programmer\LoginController@logout')->name('programmer.logout');
+    Route::post('logout',      'programmer\LoginController@logout')->name('programmer.logout');
 });
