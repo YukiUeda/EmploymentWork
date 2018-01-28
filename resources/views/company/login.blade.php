@@ -1,7 +1,7 @@
 @extends('htmlTemplate')
 
 @section('main')
-    <h1>教員ログイン</h1>
+    <h1>会社ログイン</h1>
     {{-- エラーの表示を追加 --}}
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -25,4 +25,5 @@
         {!! Form::submit('ログイン',['class'=>'mdl-button mdl-js-button mdl-button--raised']) !!}
     </div>
     {!! Form::close() !!}
+    <a href="/company/create">アカウント作成がまだの方はこちら</a>
 @endsection

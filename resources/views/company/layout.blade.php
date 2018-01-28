@@ -7,7 +7,11 @@
     @yield('layout_css')
 @endsection
 @section('js')
-    <script type="text/javascript"  src="{{{'/js/company/company.js'}}}"></script>
+    <script>
+        $(function () {
+            $('.button-collapse').sideNav();
+        });
+    </script>
     @yield('layout_js')
 @endsection
 @section('main')

@@ -1,7 +1,4 @@
 $(function() {
-  $('.button-collapse').sideNav();
-
-
   // 初期設定
   var options = {
     aspectRatio: 1 / 1,
