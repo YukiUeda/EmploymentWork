@@ -7,7 +7,7 @@
     @yield('layout_css')
 @endsection
 @section('js')
-    <script type="text/javascript"  src="{{{'/js/company.js'}}}"></script>
+    <script type="text/javascript"  src="{{{'/js/company/company.js'}}}"></script>
     @yield('layout_js')
 @endsection
 @section('main')

@@ -143,6 +143,11 @@ Route::group(['prefix' => 'company', 'middleware' => 'auth:company_account'], fu
     //プラグイン商品追加
     Route::get('product/plugin/create','company\ProductController@pluginIndex');
     Route::post('product/plugin/create','company\ProductController@productPluginCreate');
+    //商品一覧
+    Route::get('product','company\ProductController@product');
+    Route::post('product','company\ProductController@product');
+    //chartデータ取得
+    Route::post('product/chart','company\ProductController@chart');
     //ログアウト
     Route::get('logout',   'company\LoginController@logout')->name('company.logout');
     Route::post('logout',   'company\LoginController@logout')->name('company.logout');

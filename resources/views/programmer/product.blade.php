@@ -16,7 +16,7 @@
                 complete: function() { alert('Closed'); } // Callback for Modal close
             }
         );
-
+        {{$}}
         $(document).ready(function(){
             // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
             $('.modal').modal();
@@ -71,65 +71,5 @@
             @endforeach
         </tbody>
     </table>
-
-    <!-- Modal Trigger -->
-
-    <!-- Modal Structure -->
-    <div id="modal1" class="modal modal-fixed-footer">
-        <div class="modal-content row">
-            {!! Form::open(['url' => 'programmer\create','enctype'=>'multipart/form-data']) !!}
-            <div class="input-field col s12">
-                {!! Form::label('title', 'タイトル') !!}
-                {!! Form::text('name', null,['class'=>'validate']) !!}
-            </div>
-            <div class="text_area">
-                <div class="input-field col s6">
-                    {!! Form::label('description', '説明文') !!}
-                    {!! Form::textarea('email', null,['class'=>'validate']) !!}
-                </div>
-                <div class="file-field input-field col s6">
-                    <div class="btn">
-                        <span>File</span>
-                        {!! Form::file('image',['class'=>'validate','id'=>'profile-image']) !!}
-                    </div>
-                    <div class="file-path-wrapper">
-                        {!! Form::text('path', null,['class'=>'file-path validate']) !!}
-                    </div>
-                </div>
-            </div>
-            <div class="text_area">
-                <div class="input-field col s6">
-                    {!! Form::label('contents', 'コンテンツ1') !!}
-                    {!! Form::textarea('name[]', null,['class'=>'validate']) !!}
-                </div>
-                <div class="file-field input-field col s6">
-                    <div class="btn">
-                        <span>コンテンツ画像</span>
-                        {!! Form::file('images[]',['class'=>'validate','id'=>'profile-image']) !!}
-                    </div>
-                    <div class="file-path-wrapper">
-                        {!! Form::text('path', null,['class'=>'file-path validate']) !!}
-                    </div>
-                </div>
-            </div>
-            <div class="input-field col s12">
-                {!! Form::submit('アカウント作成',['class'=>'mdl-button mdl-js-button mdl-button--raised']) !!}
-            </div>
-            {!! Form::close() !!}
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
-        </div>
-    </div>
-
-    <!-- Modal Structure -->
-    <div id="modal2" class="modal modal-fixed-footer">
-        <div class="modal-content row">
-
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
-        </div>
-    </div>
     {{ $products->links() }}
 @endsection

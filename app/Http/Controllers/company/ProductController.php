@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\company;
 
+use App\Curriculum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\company\ProductPluginRequest;
 use App\Http\Requests\company\ProductRequest;
 use App\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
@@ -107,5 +110,31 @@ class ProductController extends Controller
         $product->save();
         
         return view('company.product_update');
+    }
+
+    public function product(){
+        $company = \Auth::user();
+        $id = $company->id;
+
+        $products = Product::query()->where('company_id',$id)->paginate('10');
+
+        return \view('company.product',compact('products'));
+    }
+
+    public function chart(Request $request){
+        $id = $request->id;
+        $product = Product::query()->find($id);
+
+        $curriculums = Curriculum::query()->select(DB::raw('subject,count(*) as data'))
+            ->where('product_id',$id)->groupBy('subject')->get();
+
+        \Debugbar::addMessage($curriculums);
+        $data = array();
+        $data['name'] = $product->name;
+        foreach ($curriculums as $curriculum){
+            $data['data'][$curriculum->subject] = $curriculum->data;
+        }
+
+        return \Response::json($data);
     }
 }
