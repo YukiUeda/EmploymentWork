@@ -22,8 +22,8 @@
             <tr>
                 <td><img style="height: 50px;" src="{{{$product->image}}}"></td>
                 <td>{{$product->name}}</td>
-                <td>{{$product->price}}</td>
-                <td>{{$product->click_price}}</td>
+                <td>{{number_format($product->price)}}円</td>
+                <td>{{number_format($product->click_price)}}円</td>
                 <td data-product="{{$product->id}}"><button data-target="modal1" class="btn modal-trigger">Modal</button></td>
             </tr>
         @endforeach
