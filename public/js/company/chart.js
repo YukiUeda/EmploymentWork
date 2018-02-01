@@ -17,6 +17,7 @@ $(function() {
         }
       })
       .done(function(data) {
+        console.log(data);
         mychart = new Chart(document.getElementById("chart"),{
             type: 'pie',
             "data":{
@@ -38,18 +39,18 @@ $(function() {
                     "label":data["name"]+'の科目の使用状況',
                     "data":data["data"],
                     "backgroundColor":[
+                      "rgb(255, 00, 00)",
+                      "rgb(00, 00, 255)",
+                      "rgb(255, 255, 00)",
+                      "rgb(00, 80, 00)",
+                      "rgb(160, 82, 45)",
                       "rgb(255, 99, 132)",
-                      "rgb(255, 99, 132)",
-                      "rgb(255, 99, 132)",
-                      "rgb(255, 99, 132)",
-                      "rgb(255, 99, 132)",
-                      "rgb(255, 99, 132)",
-                      "rgb(255, 99, 132)",
-                      "rgb(255, 99, 132)",
-                      "rgb(255, 99, 132)",
-                      "rgb(255, 99, 132)",
-                      "rgb(255, 99, 132)",
-                      "rgb(255, 99, 132)",
+                      "rgb(255, 165, 0)",
+                      "rgb(169, 169, 169)",
+                      "rgb(153, 50, 204)",
+                      "rgb(100, 149, 237)",
+                      "rgb(127, 255, 132)",
+                      "rgb(00, 00, 00)",
                     ]
                 }]
             }

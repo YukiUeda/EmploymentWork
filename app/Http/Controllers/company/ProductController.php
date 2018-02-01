@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\company\ProductPluginRequest;
 use App\Http\Requests\company\ProductRequest;
 use App\Product;
+use App\SchoolCurriculum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
@@ -121,18 +122,36 @@ class ProductController extends Controller
         return \view('company.product',compact('products'));
     }
 
+    /**
+     * チャートに表示するないようの取得
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function chart(Request $request){
         $id = $request->id;
         $product = Product::query()->find($id);
 
-        $curriculums = Curriculum::query()->select(DB::raw('subject,count(*) as data'))
-            ->where('product_id',$id)->groupBy('subject')->get();
+        $curriculums = SchoolCurriculum::query()->select(DB::raw('subject,count(*) as data'))
+            ->join('curriculums','curriculums.id','school_curriculums.curriculum_id')
+            ->where('product_id',$id)->groupBy('subject')->orderBy('subject')->get();
 
-        \Debugbar::addMessage($curriculums);
         $data = array();
         $data['name'] = $product->name;
+        $i=0;
         foreach ($curriculums as $curriculum){
+            for(;$i < $curriculum->subject;$i++){
+                $data['data'][$i] = 0;
+            }
             $data['data'][$curriculum->subject] = $curriculum->data;
+            $i++;
+        }
+
+        $i++;
+        if($i != 0){
+            $i--;
+        }
+        for(;$i <= 11;$i++){
+            $data['data'][$i] = 0;
         }
 
         return \Response::json($data);
