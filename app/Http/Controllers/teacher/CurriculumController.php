@@ -34,9 +34,9 @@ class CurriculumController extends Controller
 
         foreach ($subjects as $key=>$subject){
             //科目の目標の類似度の高いカリキュラムを取得
-            $curriculums = SchoolObjective::select('curriculums.*', \DB::raw('sum(1) as point'))
-                ->join('curriculum_objectives','curriculum_objectives.objective_id','=','school_objectives.objective_id')
-                ->join('curriculums','curriculum_objectives.curriculum_id' ,'=','curriculums.id')
+            $curriculum = Curriculum::select('curriculums.*', \DB::raw('sum(1) as point'))
+                ->leftJoin('curriculum_objectives','curriculum_objectives.curriculum_id' ,'=','curriculums.id')
+                ->leftJoin('school_objectives','curriculum_objectives.objective_id','=','school_objectives.objective_id')
                 ->where('curriculums.subject','=',$key)
                 ->whereNotIn('curriculums.id',SchoolCurriculum::query()->select(['curriculum_id'])->where('year','=',$year)->where('teacher_id','=',$tId))
                 ->groupBy('curriculums.id')->orderBy('point','desc')->limit(6)->get();
@@ -49,13 +49,18 @@ class CurriculumController extends Controller
                 ->where('school_curriculums.teacher_id',$tId)
                 ->get();
 
-            foreach ($curriculums as $curriculum){
+            $point = array();
+            $curriculums = array();
+            foreach ($curriculum as $curri){
                 foreach ($curriculumProducts as $curriculumProduct){
-                    if($curriculumProduct == $curriculum){
-                        $curriculum->point += 1;
+                    if($curriculumProduct == $curri){
+                        $curri->point + 1;
                     }
                 }
+                $point[] = $curri->point;
+                $curriculums[] = $curri;
             }
+            array_multisort($point,SORT_DESC , SORT_NUMERIC , $curriculums);
             $curriculumList[] = $curriculums;
         }
 
@@ -171,6 +176,24 @@ class CurriculumController extends Controller
             $product = Product::query()->where('id','=', $curriculum[0]->product_id)->get();
             //商品URLにリダイレクト
             return redirect($product[0]->url);
+        }
+
+        return $this->index();
+
+    }
+
+    public function curriculumDelete(){
+        $teacher = \Auth::user();
+        $tId = $teacher->id;
+
+        $schoolCurriculums = SchoolCurriculum::query()->where('teacher_id','=',$tId)->get();
+
+        \Debugbar::addMessage($schoolCurriculums);
+
+        foreach ($schoolCurriculums as $schoolCurriculum){
+            $id = $schoolCurriculum->id;
+            $curriculum = SchoolCurriculum::find($id);
+            $curriculum->delete();
         }
 
         return $this->index();
