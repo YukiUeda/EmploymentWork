@@ -1,7 +1,9 @@
 @extends('htmlTemplate')
-
+@section('title')
+    学校ログイン
+@endsection
 @section('main')
-    <h1>学校</h1>
+    <h1>学校ログイン</h1>
     {{-- エラーの表示を追加 --}}
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -23,4 +25,5 @@
     </div>
     <button class="btn waves-effect" type="submit" name="action">ログイン</button>
     {!! Form::close() !!}
+    <a href="/school/create">アカウント作成がまだの方はこちら</a>
 @endsection

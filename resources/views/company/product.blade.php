@@ -14,7 +14,7 @@
             <th>商品名</th>
             <th>価格</th>
             <th>1クリック単価</th>
-            <th>編集</th>
+            <th>採用割合</th>
         </tr>
         </thead>
         <tbody>
@@ -24,7 +24,7 @@
                 <td>{{$product->name}}</td>
                 <td>{{number_format($product->price)}}円</td>
                 <td>{{number_format($product->click_price)}}円</td>
-                <td data-product="{{$product->id}}"><button data-target="modal1" class="btn modal-trigger">Modal</button></td>
+                <td data-product="{{$product->id}}"><button data-target="modal1" class="btn modal-trigger">表示</button></td>
             </tr>
         @endforeach
         </tbody>
@@ -34,6 +34,7 @@
     <div id="modal1" class="modal row">
         <div class="modal-content">
             <div class="chart-container" class="col s12" style="position: relative;">
+                <h2>科目別商品の採用割合</h2>
                 <canvas id="chart"></canvas>
             </div>
         </div>

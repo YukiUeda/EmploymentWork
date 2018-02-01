@@ -1,4 +1,4 @@
-@extends('school.layout')
+@extends('programmer.layout')
 
 @section('content')
     データを更新しました。

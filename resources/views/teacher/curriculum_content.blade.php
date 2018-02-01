@@ -28,12 +28,11 @@
             <div id="content">
                 <h3>作業手順</h3>
                 @foreach($contents as $content)
-                    <div class="col s1 right-align bold">{{$loop->count}}</div>
-                    <div class="col s10 card-panel">
+                    <div class="col s1 right-align bold">{{$loop->iteration}}</div>
+                    <div class="col s11 card-panel">
                         <img class="col s4" src="{{{$content->image}}}">
                         <p  class="col s8">{{$content->contents}}</p>
                     </div>
-                    <div class="col s1"></div>
                 @endforeach
                 <div class="border col s12"></div>
             </div>

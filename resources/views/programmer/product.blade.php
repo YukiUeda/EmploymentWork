@@ -16,7 +16,6 @@
                 complete: function() { alert('Closed'); } // Callback for Modal close
             }
         );
-        {{$}}
         $(document).ready(function(){
             // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
             $('.modal').modal();
@@ -36,7 +35,7 @@
     </script>
 @endsection
 
-@section('css')
+@section('layout_css')
     <style>
         .text_area textarea{
             resize:none;
@@ -54,19 +53,18 @@
                 <th>販売会社</th>　
                 <th>価格</th>
                 <th>1クリック単価</th>
-                <th>編集</th>
+                <th>作成</th>
             </tr>
         </thead>
         <tbody>
-        {{Debugbar::addMessage($products)}}
             @foreach ($products as $product)
                 <tr>
                     <td><img style="height: 50px;" src="{{{$product->image}}}"></td>
                     <td>{{$product->pname}}</td>
                     <td>{{$product->cname}}</td>
-                    <td>{{$product->price}}</td>
-                    <td>{{$product->click_price}}</td>
-                    <td><a class="waves-effect waves-light btn modal-trigger" href="/programmer/product/{{$product->pid}}">Modal</a></td>
+                    <td>{{number_format($product->price)}}円</td>
+                    <td>{{number_format($product->click_price)}}円</td>
+                    <td><a class="waves-effect waves-light btn modal-trigger" href="/programmer/product/{{$product->pid}}">作成</a></td>
                 </tr>
             @endforeach
         </tbody>

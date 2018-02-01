@@ -12,7 +12,7 @@ $(function() {
     cnt++;
 
     var form = $('.content').clone();
-    form.children('.input-field').children('textarea').attr('name', 'content[]').val('');
+    form.children('.input-field').children('textarea').attr('name', 'contents[]').val('');
     form.children('.input-field').children('.btn').children('input').attr('name', 'images[]').val('');
     form.children('.input-field').children('.btn').children('input').attr('id', 'profile-image' + cnt);
     form.children('.input-field').children('.btn').children('input').attr('data-img', cnt);
@@ -37,7 +37,7 @@ $(function() {
     // 初期設定
     var options = {
       aspectRatio: 1 / 1,
-      viewMode: 1,
+      viewMode: 0,
       crop: function(e) {
         cropData = $('#img' + img).cropper("getData");
         $("#upload-image-x-" + img).val(Math.floor(cropData.x));
@@ -45,9 +45,7 @@ $(function() {
         $("#upload-image-w-" + img).val(Math.floor(cropData.width));
         $("#upload-image-h-" + img).val(Math.floor(cropData.height));
       },
-      zoomable: false,
-      minCropBoxWidth: 162,
-      minCropBoxHeight: 162
+      zoomable: true,
     };
     // ファイル選択変更時に、選択した画像をCropperに設定する
     $('#img' + img).cropper(options);

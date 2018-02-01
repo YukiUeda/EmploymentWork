@@ -1,6 +1,9 @@
 @extends('htmlTemplate')
+@section('title')
+    プログラマー作成
+@endsection
 @section('main')
-    <h1>teacher</h1>
+    <h1>プログラマーアカウント作成</h1>
     {{-- エラーの表示を追加 --}}
     @if (isset($errors))
         <div class="alert alert-danger">

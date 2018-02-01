@@ -1,3 +1,7 @@
+nav {
+  background-color: #43a047;
+}
+
 @media all and (max-width: 993px){
     main, #test1 {
       padding-left: 0px;
@@ -8,6 +12,13 @@
     main, #test1 {
       padding-left: 300px;
     }
+}
+
+.dropdown-content li>p,.dropdown-content li>a{
+  line-height: 22px;
+  padding: 14px 16px;
+  font-size: 11px;
+  margin: 0 0 0 0;
 }
 
 #calendar{

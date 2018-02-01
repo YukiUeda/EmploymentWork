@@ -1,4 +1,7 @@
 @extends('htmlTemplate')
+@section('title')
+    会社作成
+@endsection
 @section('main')
     <h1>会社作成</h1>
     {{-- エラーの表示を追加 --}}

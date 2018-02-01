@@ -1,5 +1,7 @@
 @extends('htmlTemplate')
-
+@section('title')
+    会社ログイン
+@endsection
 @section('main')
     <h1>会社ログイン</h1>
     {{-- エラーの表示を追加 --}}

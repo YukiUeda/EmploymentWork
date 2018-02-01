@@ -1,7 +1,9 @@
 @extends('htmlTemplate')
-
+@section('title')
+    プログラマーログイン
+@endsection
 @section('main')
-    <h1>プログラマー</h1>
+    <h1>プログラマーログイン</h1>
     {{-- エラーの表示を追加 --}}
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -25,4 +27,5 @@
         {!! Form::submit('ログイン',['class'=>'mdl-button mdl-js-button mdl-button--raised']) !!}
     </div>
     {!! Form::close() !!}
+    <a href="/programmer/create">アカウント作成がまだの方はこちら</a>
 @endsection
