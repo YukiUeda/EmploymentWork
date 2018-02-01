@@ -150,7 +150,7 @@ class ProductController extends Controller
                 $i++;
             }
 
-            return view('programmer.curriculum_create',compact('product'));
+            return view('programmer.success');
         }
         return view('programmer.top');
     }

@@ -35,16 +35,38 @@ class HomeController extends Controller
             ->join('products','products.id','=','curriculums.product_id')
             ->groupBy(\DB::raw('DATE_FORMAT(product_clicks.created_at, \'%Y%-%m%-%d\')'))
             ->where('curriculums.programmer_id','=',$programmer->id)
+            ->orderBy('date','desc')
+            ->limit(30)
             ->get();
 
-        $data = array();
         $labels = array();
-
-        //チャートにセットするために整形
+        $date = null;
         foreach ($productClicks as $productClick){
+            if(empty($date)){
+                $date = $productClick->date;
+            }
+            else{
+                if($date != $productClick->date){
+                    for($i = 1;0 == 0;$i++){
+                        if(count($labels) > 30 ){
+                            break;
+                        }
+                        if(date("Y-m-d",strtotime("-$i day $date")) == $productClick->date){
+                            break;
+                        }
+                        $labels[] = date("Y-m-d",strtotime("-$i day $date")) ;
+                        $data[]   = 0;
+                    }
+                }
+            }
+            if(count($labels) > 30 ){
+                break;
+            }
+            $date = $productClick->date;
             $labels[] = $productClick->date;
             $data[]   = ( int )$productClick->price;
         }
+        array_multisort($labels,SORT_ASC,$data);
 
         //jsで使うためにjson型にエンコード
         $labels = json_encode($labels);
@@ -62,6 +84,8 @@ class HomeController extends Controller
         $programmer = \Auth::user();
         //dateのタイプ取得
         $date = $request->date;
+        $data = array();
+        $labels = array();
         //タイプ毎に取得するデータの分岐
         switch ($date){
             case 'year':
@@ -73,7 +97,37 @@ class HomeController extends Controller
                     ->join('products','products.id','=','curriculums.product_id')
                     ->groupBy(\DB::raw('DATE_FORMAT(product_clicks.created_at, \'%Y\')'))
                     ->where('curriculums.programmer_id','=',$programmer->id)
+                    ->orderBy('date','desc')
+                    ->limit(30)
                     ->get();
+
+                $date = null;
+                foreach ($productClicks as $productClick){
+                    if(empty($date)){
+                        $date = $productClick->date;
+                    }
+                    else{
+                        if($date != $productClick->date){
+
+                            for($i = 1;0 == 0;$i++){
+                                if(count($labels) > 30 ){
+                                    break;
+                                }
+                                if($date - 1 == $productClick->date){
+                                    break;
+                                }
+                                $labels[] = $date - 1 ;
+                                $data[]   = 0;
+                            }
+                        }
+                    }
+                    if(count($labels) > 30 ){
+                        break;
+                    }
+                    $date = $productClick->date;
+                    $labels[] = $productClick->date;
+                    $data[]   = ( int )$productClick->price;
+                }
                 break;
             case 'month':
                 //１月単位のデータの取得
@@ -84,7 +138,37 @@ class HomeController extends Controller
                     ->join('products','products.id','=','curriculums.product_id')
                     ->groupBy(\DB::raw('DATE_FORMAT(product_clicks.created_at, \'%Y%-%m\')'))
                     ->where('curriculums.programmer_id','=',$programmer->id)
+                    ->orderBy('date','desc')
+                    ->limit(30)
                     ->get();
+
+
+                $date = null;
+                foreach ($productClicks as $productClick){
+                    if(empty($date)){
+                        $date = $productClick->date;
+                    }
+                    else{
+                        if($date != $productClick->date){
+                            for($i = 1;0 == 0;$i++){
+                                if(count($labels) > 30 ){
+                                    break;
+                                }
+                                if(date("Y-m",strtotime("-$i month $date")) == $productClick->date){
+                                    break;
+                                }
+                                $labels[] = date("Y-m",strtotime("-$i month $date")) ;
+                                $data[]   = 0;
+                            }
+                        }
+                    }
+                    if(count($labels) > 30 ){
+                        break;
+                    }
+                    $date = $productClick->date;
+                    $labels[] = $productClick->date;
+                    $data[]   = ( int )$productClick->price;
+                }
                 break;
             case 'day':
                 //１日単位の日にちの取得
@@ -95,17 +179,41 @@ class HomeController extends Controller
                     ->join('products','products.id','=','curriculums.product_id')
                     ->groupBy(\DB::raw('DATE_FORMAT(product_clicks.created_at, \'%Y%-%m%-%d\')'))
                     ->where('curriculums.programmer_id','=',$programmer->id)
+                    ->orderBy('date','desc')
+                    ->limit(30)
                     ->get();
+
+                $date = null;
+                foreach ($productClicks as $productClick){
+                    if(empty($date)){
+                        $date = $productClick->date;
+                    }
+                    else{
+                        if($date != $productClick->date){
+                            for($i = 1;0 == 0;$i++){
+                                if(count($labels) > 30 ){
+                                    break;
+                                }
+                                if(date("Y-m-d",strtotime("-$i day $date")) == $productClick->date){
+                                    break;
+                                }
+                                $labels[] = date("Y-m-d",strtotime("-$i day $date")) ;
+                                $data[]   = 0;
+                            }
+                        }
+                    }
+                    if(count($labels) > 30 ){
+                        break;
+                    }
+                    $date = $productClick->date;
+                    $labels[] = $productClick->date;
+                    $data[]   = ( int )$productClick->price;
+                }
                 break;
         }
 
-        $data = array();
-        $labels = array();
+        array_multisort($labels,SORT_ASC,$data);
 
-        foreach ($productClicks as $productClick){
-            $labels[] = $productClick->date;
-            $data[]   = ( int )$productClick->price;
-        }
         //チャートにセットするために整形
         $date = array(
             'labels' => $labels,
