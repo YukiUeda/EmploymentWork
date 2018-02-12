@@ -20,7 +20,7 @@
                 var labels = {!! $labels !!};
                 var ctx = document.getElementById('myChart').getContext('2d');
                 var myChart = new Chart(ctx, {
-                    type : 'line',
+                    type : 'bar',
                     data: {
                         labels: labels,
                         datasets:[{
@@ -61,7 +61,7 @@
                             var ctx = document.getElementById('myChart').getContext('2d');
                             myChart.destroy();
                             myChart = new Chart(ctx, {
-                                type : 'line',
+                                type : 'bar',
                                 data: {
                                     labels:data['labels'],
                                     datasets:[{
