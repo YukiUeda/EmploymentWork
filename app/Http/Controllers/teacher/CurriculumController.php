@@ -38,6 +38,7 @@ class CurriculumController extends Controller
                 ->leftJoin('curriculum_objectives','curriculum_objectives.curriculum_id' ,'=','curriculums.id')
                 ->leftJoin('school_objectives','curriculum_objectives.objective_id','=','school_objectives.objective_id')
                 ->where('curriculums.subject','=',$key)
+                ->where('curriculums.auth','=',1)
                 ->whereNotIn('curriculums.id',SchoolCurriculum::query()->select(['curriculum_id'])->where('year','=',$year)->where('teacher_id','=',$tId))
                 ->groupBy('curriculums.id')->orderBy('point','desc')->limit(6)->get();
             //過去にやったカリキュラムの商品番号取得
@@ -187,8 +188,6 @@ class CurriculumController extends Controller
         $tId = $teacher->id;
 
         $schoolCurriculums = SchoolCurriculum::query()->where('teacher_id','=',$tId)->get();
-
-        \Debugbar::addMessage($schoolCurriculums);
 
         foreach ($schoolCurriculums as $schoolCurriculum){
             $id = $schoolCurriculum->id;

@@ -38,7 +38,7 @@
             <li><a href="/company/product"><i class="material-icons">date_range</i>商品一覧</a></li>
             <li><a href="/company/product/create"><i class="material-icons">supervisor_account</i>商品追加</a></li>
             <li><a href="/company/product/plugin/create"><i class="material-icons">supervisor_account</i>プラグイン商品追加</a></li>
-
+            <li><a href="/company/curriculum"><i class="material-icons">list</i>カリキュラム一覧</a></li>
         </ul>
     </aside>
     <main class="row">

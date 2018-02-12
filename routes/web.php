@@ -153,6 +153,13 @@ Route::group(['prefix' => 'company', 'middleware' => 'auth:company_account'], fu
     //ログアウト
     Route::get('logout',   'company\LoginController@logout')->name('company.logout');
     Route::post('logout',   'company\LoginController@logout')->name('company.logout');
+    //カリキュラム一覧
+    Route::get('curriculum',   'company\CurriculumController@index');
+    Route::post('curriculum',   'company\CurriculumController@index');
+    //カリキュラム詳細
+    Route::get('/curriculum/{id}','company\CurriculumController@detail');
+    //カリキュラム承認
+    Route::get('/curriculum/{id}/auth','company\CurriculumController@auth');
 });
 
 
