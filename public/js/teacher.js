@@ -66,4 +66,34 @@ jQuery(function() {
     format: "yyyy-mm-dd",
   });
 
+  $('.star.rating').click(function(){
+    console.log( $(this).parent().data('stars') + ", " + $(this).data('rating'));
+    var i = 1
+    for(;i<=$(this).data('rating');i++){
+      $('[data-rating='+i+']').css('fill','#ffd055');
+    }
+    for(;i<=5;i++){
+      $('[data-rating='+i+']').css('fill','#d8d8d8');
+    }
+    $('#evaluation').val($(this).data('rating'));
+  });
+
+  $('.star.rating').hover(function(){
+    console.log( $(this).parent().data('stars') + ", " + $(this).data('rating'));
+    var i = 1
+    for(;i<=$(this).data('rating');i++){
+      $('[data-rating='+i+']').css('fill','#ffd055');
+    }
+    for(;i<=5;i++){
+      $('[data-rating='+i+']').css('fill','#d8d8d8');
+    }
+  },function(){
+    var i = 1
+    for(;i<=$('#evaluation').val();i++){
+      $('[data-rating='+i+']').css('fill','#ffd055');
+    }
+    for(;i<=5;i++){
+      $('[data-rating='+i+']').css('fill','#d8d8d8');
+    }
+  });
 });

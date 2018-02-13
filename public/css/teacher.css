@@ -60,3 +60,15 @@ h3{
   font-weight: 500;
   font-size: 1.5rem;
 }
+
+.stars {
+  cursor: pointer;
+}
+
+.card-panel .evaluation{
+  padding-left: 0;
+}
+
+.comment{
+  padding:10px 10px 10px 10px;
+}

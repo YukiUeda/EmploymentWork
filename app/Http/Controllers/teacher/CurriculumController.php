@@ -6,6 +6,7 @@ use App\Curriculum;
 use App\CurriculumContent;
 use App\CurriculumObjective;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\teacher\CommentRequest;
 use App\Http\Requests\teacher\CurriculumTableRequest;
 use App\product;
 use App\ProductClick;
@@ -74,12 +75,21 @@ class CurriculumController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function detail($id){
+        $teacher = \Auth::user();
+        $tId     = $teacher->id;
         $curriculum = Curriculum::find($id);
         if(!empty($curriculum)){
             $product  = product::find($curriculum->product_id);
             $contents = CurriculumContent::where('curriculum_id',$id)->get();
             $objects  = CurriculumObjective::join('objectives','objective_id','=','objectives.id')->where('curriculum_id',$id)->get();
-            return view('teacher.curriculum_content',compact('curriculum','objects','contents','product'));
+            $comments  = SchoolCurriculum::query()
+                ->where('comment','<>','NULL')
+                ->whereNotNull('comment')
+                ->where('ecaluation','<>','0')
+                ->whereNotNull('ecaluation')
+                ->get();
+            $flg      = SchoolCurriculum::query()->where('curriculum_id','=',$id)->where('teacher_id','=',$tId)->get();
+            return view('teacher.curriculum_content',compact('curriculum','objects','contents','product','flg','comments'));
         }else{
             return $this->index();
         }
@@ -197,5 +207,20 @@ class CurriculumController extends Controller
 
         return $this->index();
 
+    }
+
+    public function comment($id,CommentRequest $request){
+        $teacher = \Auth::user();
+        $tId     = $teacher->id;
+        $curriculums      = SchoolCurriculum::query()
+            ->where('curriculum_id','=',$id)
+            ->where('teacher_id','=',$tId)->get();
+        if(isset($curriculums)){
+            $curriculum = SchoolCurriculum::find($curriculums[0]->id);
+            $curriculum->comment    = $request->comment;
+            $curriculum->ecaluation = $request->evaluation;
+            $curriculum->update();
+        }
+        return redirect('https://homestead.app/teacher/curriculum/'.$id);
     }
 }
