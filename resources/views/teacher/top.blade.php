@@ -11,6 +11,7 @@
 
         $(document).ready(function() {
             $('#calendar').fullCalendar({
+                defaultView: 'agendaWeek',
                 header: {
                     left: 'prev,next today',
                     center: 'title',
