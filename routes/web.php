@@ -54,6 +54,9 @@ Route::group(['prefix' => 'teacher', 'middleware' => 'auth:teacher_account'], fu
     Route::get('/click/{id}','teacher\CurriculumController@productClick');
 
     Route::get('/delete','teacher\CurriculumController@curriculumDelete');
+
+    //コメント追加
+    Route::post('/curriculum/{id}/comment','teacher\CurriculumController@comment');
 });
 
 /*
