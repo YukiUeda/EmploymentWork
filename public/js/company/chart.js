@@ -36,7 +36,6 @@ $(function() {
                   '総合',
                 ],
                 "datasets":[{
-                    "label":data["name"]+'の科目の使用状況',
                     "data":data["data"],
                     "backgroundColor":[
                       "rgb(255, 00, 00)",
@@ -53,6 +52,13 @@ $(function() {
                       "rgb(00, 00, 00)",
                     ]
                 }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    fontSize:24,
+                    text:data["name"]+'の科目の使用状況',
+                }
             }
         });
       })

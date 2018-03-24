@@ -72,3 +72,8 @@ h3{
 .comment{
   padding:10px 10px 10px 10px;
 }
+
+#padding{
+  padding-top: 10px;
+  padding-bottom: 30px;
+}

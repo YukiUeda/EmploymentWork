@@ -24,7 +24,7 @@ class IndexController extends Controller
             ->join('school_curriculums','school_curriculums.teacher_id','=','teacher_accounts.id')
             ->join('curriculums','curriculums.id','=','school_curriculums.curriculum_id')
             ->where('schools.id','=',$sId)
-            ->orderBy('school_curriculums.updated_at')->get();
+            ->orderBy('school_curriculums.updated_at','desc')->get();
 
         //学校の先生情報取得
         $teachers = TeacherAccount::query()->where('teacher_accounts.school_id','=',$sId)

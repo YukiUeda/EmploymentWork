@@ -34,7 +34,6 @@
     <div id="modal1" class="modal row">
         <div class="modal-content">
             <div class="chart-container" class="col s12" style="position: relative;">
-                <h2>科目別商品の採用割合</h2>
                 <canvas id="chart"></canvas>
             </div>
         </div>

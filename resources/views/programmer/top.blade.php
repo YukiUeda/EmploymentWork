@@ -26,9 +26,7 @@
                         datasets:[{
                             label:"１日毎の報酬集計(円)",
                             fill :false,
-                            pointBackgroundColor:'rgb(238, 110, 115)',
-                            pointRadius:5,
-                            borderColor: "rgb(238, 110, 115)",//線の色
+                            backgroundColor: "rgb(238, 110, 115)",//線の色
                             data : data ,
                         }]
                     },
@@ -65,12 +63,10 @@
                                 data: {
                                     labels:data['labels'],
                                     datasets:[{
-                                        pointRadius:5,
                                         data :data['datasets']['data'],
                                         label:data['datasets']['label'],
                                         fill :false,
-                                        borderColor:'rgb(238, 110, 115)',
-                                        pointBackgroundColor:'rgb(238, 110, 115)'
+                                        backgroundColor:'rgb(238, 110, 115)',
                                     }]
                                 },
                                 options:{

@@ -13,6 +13,7 @@ use App\ProductClick;
 use App\SchoolCurriculum;
 use App\SchoolObjective;
 use App\SchoolTimeTable;
+use App\TeacherAccount;
 use Illuminate\Support\Facades\DB;
 
 
@@ -33,15 +34,114 @@ class CurriculumController extends Controller
 
         $curriculumList = array();
 
+        //追加予定
+        $teacherAccounts = TeacherAccount::all('id');
+
+        $myCurriculums = SchoolCurriculum::query()
+            ->select('curriculums.id',DB::raw('count(school_curriculums.id) as count'))
+            ->rightJoin('curriculums', function ($join) use($tId){
+                $join->on('curriculums.id','=','school_curriculums.curriculum_id')
+                    ->where('school_curriculums.teacher_id','=',$tId);
+            })
+            ->orderBy('id')->groupBy('curriculums.id')->get();
+
+
+        $myCurriculumList = array();
+        foreach ($myCurriculums as $myCurriculum){
+            if($myCurriculum->count > 0){
+                $myCurriculumList[$myCurriculum->id] = '0';
+            }else{
+                $myCurriculumList[$myCurriculum->id] = '1';
+            }
+        }
+
+        $otherCurriculumArray = array();
+        foreach ($teacherAccounts as $teacherAccount){
+            if($teacherAccount->id != $tId){
+                $otherCurriculums = SchoolCurriculum::query()
+                    ->select('curriculums.id',DB::raw('count(school_curriculums.id) as count'))
+                    ->rightJoin('curriculums', function ($join) use($teacherAccount){
+                        $join->on('curriculums.id','=','school_curriculums.curriculum_id')
+                            ->where('school_curriculums.teacher_id','=',$teacherAccount->id);
+                    })
+                    ->orderBy('id')->groupBy('curriculums.id')->get();
+
+                $otherCurriculumArray[$teacherAccount->id] = array();
+                foreach ($otherCurriculums as $otherCurriculum){
+                    if($otherCurriculum->count > 0){
+                        $otherCurriculumArray[$teacherAccount->id][$otherCurriculum->id]['cId'] = '0';
+                    }else{
+                        $otherCurriculumArray[$teacherAccount->id][$otherCurriculum->id]['cId'] = '1';
+                    }
+                    $otherCurriculumArray[$teacherAccount->id][$otherCurriculum->id]['tId'] =  $teacherAccount->id;
+                }
+            }
+        }
+
+        $match = array();
+        foreach ($otherCurriculumArray as $otherTId => $otherCurriculums){
+            $match[$otherTId] = 0 ;
+            foreach ($otherCurriculums as $key => $otherCurriculum){
+                if($otherCurriculum['cId'] == $myCurriculumList[$key] && $otherCurriculum == 1){
+                    $match[$otherTId]++;
+                }
+            }
+        }
+
+        array_multisort($match, SORT_DESC, $otherCurriculumArray);
+
+
+        //追加予定終わり
         foreach ($subjects as $key=>$subject){
             //科目の目標の類似度の高いカリキュラムを取得
-            $curriculum = Curriculum::select('curriculums.*', \DB::raw('sum(1) as point'))
-                ->leftJoin('curriculum_objectives','curriculum_objectives.curriculum_id' ,'=','curriculums.id')
-                ->leftJoin('school_objectives','curriculum_objectives.objective_id','=','school_objectives.objective_id')
+            $i = 1;
+            $otherObjectives = array();
+            foreach ($otherCurriculumArray as $otherCurriculum){
+                $otherObjectives[] = TeacherAccount::query()
+                    ->select('school_objectives.*')
+                    ->join('school_objectives','school_objectives.school_id','=','teacher_accounts.school_id')
+                    ->where('teacher_accounts.id','=',$otherCurriculum['3']['tId'])
+                    ->where('school_objectives.year','=',$year)
+                    ->where('subject','=',$key)
+                    ->get();
+                if($i >= 3) {
+                    break;
+                }else{
+                    $i++;
+                }
+            }
+
+
+            $myObjectives = SchoolObjective::query()
+                ->select('school_objectives.objective_id')
+                ->join('schools','schools.id','=','school_objectives.school_id')
+                ->where('subject','=',$key)
+                ->where('school_objectives.year','=',$year)
+                ->where('schools.id','=',$teacher->school_id)
+                ->groupBy('school_objectives.objective_id')->get();
+            $myObjectStr = '(0';
+            foreach ($myObjectives as $myObjective){
+                $myObjectStr .= ',' . $myObjective->objective_id;
+            }
+            $myObjectStr .= ')';
+
+            $otherObjectStr = '(0';
+            foreach ($otherObjectives as $otherObject){
+                foreach ($otherObject as $objective){
+                    $otherObjectStr .= ',' . $objective->objective_id;
+                }
+            }
+            $otherObjectStr .= ')';
+
+            $curriculum = CurriculumObjective::query()
+                ->select('curriculums.*',
+                    DB::raw('SUM(CASE WHEN curriculum_objectives.objective_id IN '.$myObjectStr.' THEN 1 WHEN curriculum_objectives.objective_id in '.$otherObjectStr.' THEN 0.5 ELSE 0  END) as point'))
+                ->rightJoin('curriculums','curriculum_objectives.curriculum_id','=','curriculums.id')
                 ->where('curriculums.subject','=',$key)
-                ->where('curriculums.auth','=',1)
-                ->whereNotIn('curriculums.id',SchoolCurriculum::query()->select(['curriculum_id'])->where('year','=',$year)->where('teacher_id','=',$tId))
-                ->groupBy('curriculums.id')->orderBy('point','desc')->limit(6)->get();
+                ->where('auth','=','1')
+                ->groupBy('curriculums.id')
+                ->orderBy('point','desc')->limit('6')
+                ->get();
             //過去にやったカリキュラムの商品番号取得
             $curriculumProducts = SchoolCurriculum::select('product_id')
                 ->join('curriculums','school_curriculums.curriculum_id','=','curriculums.id')
@@ -56,7 +156,7 @@ class CurriculumController extends Controller
             foreach ($curriculum as $curri){
                 foreach ($curriculumProducts as $curriculumProduct){
                     if($curriculumProduct == $curri){
-                        $curri->point + 1;
+                        $curri->point + 2;
                     }
                 }
                 $point[] = $curri->point;
@@ -83,11 +183,12 @@ class CurriculumController extends Controller
             $contents = CurriculumContent::where('curriculum_id',$id)->get();
             $objects  = CurriculumObjective::join('objectives','objective_id','=','objectives.id')->where('curriculum_id',$id)->get();
             $comments  = SchoolCurriculum::query()
+                ->where('curriculum_id',$id)
                 ->where('comment','<>','NULL')
                 ->whereNotNull('comment')
                 ->where('ecaluation','<>','0')
                 ->whereNotNull('ecaluation')
-                ->get();
+                ->paginate(15);
             $flg      = SchoolCurriculum::query()->where('curriculum_id','=',$id)->where('teacher_id','=',$tId)->get();
             return view('teacher.curriculum_content',compact('curriculum','objects','contents','product','flg','comments'));
         }else{

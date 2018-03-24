@@ -202,6 +202,9 @@ Route::group(['prefix' => 'programmer', 'middleware' => 'auth:programmer_account
     //TOPのチャートようajax
     Route::post('chart/ajax',         'programmer\HomeController@ajax');
     //ログアウトページ
+    Route::get( 'curriculum',      'programmer\CurriculumController@index');
+
+    //ログアウトページ
     Route::get( 'logout',      'programmer\LoginController@logout')->name('programmer.logout');
     Route::post('logout',      'programmer\LoginController@logout')->name('programmer.logout');
 });

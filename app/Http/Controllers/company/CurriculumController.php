@@ -16,6 +16,7 @@ class CurriculumController extends Controller
         $curriculums = Curriculum::select(['curriculums.*','products.name'])
             ->join('products','products.id','product_id')
             ->where('company_id','=',$company->id)
+            ->orderBy('auth')
             ->paginate(15);
 
         return view('company.curriculum',compact('curriculums'));

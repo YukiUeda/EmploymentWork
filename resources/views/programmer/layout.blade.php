@@ -32,6 +32,7 @@
         <ul id="slide-out" class="side-nav fixed">
             <li><a href="/programmer/top"><i class="material-icons">home</i>TOP</a></li>
             <li><a href="/programmer/product"><i class="material-icons">date_range</i>商品一覧</a></li>
+            <li><a href="/programmer/curriculum"><i class="material-icons">list</i>カリキュラム一覧</a></li>
         </ul>
     </aside>
     <main class="row">
